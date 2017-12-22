@@ -1,0 +1,207 @@
+<aura:component access="global">
+    Hello !!
+    <aura:attribute name="CompId" type="string" />
+    <aura:attribute name="NoOfpastyears" type="String" default="5" />
+    <aura:attribute name="NoOfutureyears" type="String" default="5"/>
+    <aura:attribute name="YearNow" type="String"/>
+    <aura:attribute name="yearsList" type="String[]" />
+    <aura:attribute name="MonthMap" type="Map" />
+    <aura:attribute name="yearparam" type="String" default="{!v.YearNow}"/>
+    <aura:attribute name="passyearparam" type="String" />
+    passyearparam{!v.passyearparam}
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    First name: <input type="text" name="FirstName" value="Mickey" onchange="{!c.check}"/><br/>
+
+    <ui:inputText aura:id="dateField" label="Birthday" value="2000-01-01" class="slds-input"/>
+    
+    <div class="slds-datepicker slds-dropdown slds-dropdown--left" aria-hidden="false" >
+        <div class="slds-datepicker__filter slds-grid">
+            <div class="slds-datepicker__filter--month slds-grid slds-grid--align-spread slds-grow">
+                <div class="slds-align-middle">
+                    <lightning:button variant="base" iconName="utility:left" iconPosition="left" title="Previous Month" aura:id="PreviousMonth" onclick="{!c.monthchange }" />
+                </div>
+                <h2  class="slds-align-middle" aria-live="assertive" aria-atomic="true">
+                    <ui:outputRichText aura:id="monthselect" value=" "/>
+                </h2>
+                <div class="slds-align-middle">
+                    <lightning:button variant="base" iconName="utility:right" iconPosition="left" title="Next Month" aura:id="NextMonth" onclick="{!c.monthchange }" />
+                </div>
+            </div>
+            <div class="slds-shrink-none">
+                <label class="slds-assistive-text" for="select-01">Pick a Year</label>
+                <div class="slds-select_container">
+                    <ui:inputSelect aura:id="yearPicker" class="slds-select" change="{!c.yearchange}">
+                        <aura:iteration items="{!v.yearsList}" var="year">
+                            <ui:inputSelectOption text="{!year}" />
+                        </aura:iteration>
+                    </ui:inputSelect>
+                </div>
+            </div>
+        </div>
+        <table class="slds-datepicker__month" role="grid" aria-labelledby="month" aura:id="mydatepicker">
+            <thead>
+                <tr id="weekdays">
+                    <th id="Sunday" scope="col">
+                        <abbr title="Sunday">Sun</abbr>
+                    </th>
+                    <th id="Monday" scope="col">
+                        <abbr title="Monday">Mon</abbr>
+                    </th>
+                    <th id="Tuesday" scope="col">
+                        <abbr title="Tuesday">Tue</abbr>
+                    </th>
+                    <th id="Wednesday" scope="col">
+                        <abbr title="Wednesday">Wed</abbr>
+                    </th>
+                    <th id="Thursday" scope="col">
+                        <abbr title="Thursday">Thu</abbr>
+                    </th>
+                    <th id="Friday" scope="col">
+                        <abbr title="Friday">Fri</abbr>
+                    </th>
+                    <th id="Saturday" scope="col">
+                        <abbr title="Saturday">Sat</abbr>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.MonthMap}" var="year">
+                    
+                    <tr id="week1">
+                        <td class="{!''+  if(year.Sunday==0,'slds-disabled-text','')}" headers="Sunday week1" role="gridcell" aria-disabled="true" aria-selected="false">
+                            <span class="slds-day">{!year.Sunday}</span>
+                        </td>
+                        <td class="{!''+  if(year.Monday==0,'slds-disabled-text','')}" headers="Monday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day">{!year.Monday}</span>
+                        </td>
+                        <td class="{!''+  if(year.Tuesday==0,'slds-disabled-text','')}" headers="Tuesday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day">{!year.Tuesday}</span>
+                        </td>
+                        <td class="{!''+  if(year.Wednesday==0,'slds-disabled-text','')}" headers="Wednesday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day">{!year.Wednesday}</span>
+                        </td>
+                        <td class="{!''+  if(year.Thursday==0,'slds-disabled-text','')}" headers="Thursday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day">{!year.Thursday}</span>
+                        </td>
+                        <td class="{!''+  if(year.Friday==0,'slds-disabled-text','')}" headers="Friday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day">{!year.Friday}</span>
+                        </td>
+                        <td class="{!''+  if(year.Saturday==0,'slds-disabled-text','')}" headers="Saturday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day">{!year.Saturday}</span>
+                        </td>
+                    </tr>
+                </aura:iteration>
+                
+            </tbody>
+        </table>
+    </div>
+
+</aura:component>
+-----------------------------------------------------------------------------------------------
+<aura:component access="global">
+    Hello !!
+    <aura:attribute name="CompId" type="string" />
+    <aura:attribute name="NoOfpastyears" type="String" default="5" />
+    <aura:attribute name="NoOfutureyears" type="String" default="5"/>
+    <aura:attribute name="YearNow" type="String"/>
+    <aura:attribute name="yearsList" type="String[]" />
+    <aura:attribute name="MonthMap" type="Map" />
+    <aura:attribute name="yearparam" type="String" default="{!v.YearNow}"/>
+    <aura:attribute name="passyearparam" type="String" />
+    <aura:attribute name="selectedDate" type="Date" />
+    <aura:attribute name="storePreviousselectedTD" type="String" />
+    selectedDate:{!v.selectedDate}
+    passyearparam{!v.passyearparam}
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    First name: <input type="text" name="FirstName" value="Mickey" onchange="{!c.check}"/><br/>
+    
+    <ui:inputDate aura:id="dateField" label="Birthday" value="{!v.selectedDate}" class="slds-input"/>
+    
+    <div class="slds-datepicker slds-dropdown slds-dropdown--left" aria-hidden="false" >
+        <div class="slds-datepicker__filter slds-grid">
+            <div class="slds-datepicker__filter--month slds-grid slds-grid--align-spread slds-grow">
+                <div class="slds-align-middle">
+                    <lightning:button variant="base" iconName="utility:left" iconPosition="left" title="Previous Month" aura:id="PreviousMonth" onclick="{!c.monthchange }" />
+                </div>
+                <h2  class="slds-align-middle" aria-live="assertive" aria-atomic="true">
+                    <ui:outputRichText aura:id="monthselect" value=" "/>
+                </h2>
+                <div class="slds-align-middle">
+                    <lightning:button variant="base" iconName="utility:right" iconPosition="left" title="Next Month" aura:id="NextMonth" onclick="{!c.monthchange }" />
+                </div>
+            </div>
+            <div class="slds-shrink-none">
+                <label class="slds-assistive-text" >Pick a Year</label>
+                <div class="slds-select_container">
+                    <ui:inputSelect aura:id="yearPicker" class="slds-select" change="{!c.yearchange}">
+                        <aura:iteration items="{!v.yearsList}" var="year">
+                            <ui:inputSelectOption text="{!year}" />
+                        </aura:iteration>
+                    </ui:inputSelect>
+                </div>
+            </div>
+        </div>
+        <table class="slds-datepicker__month" role="grid" aria-labelledby="month" aura:id="mydatepicker">
+            <thead>
+                <tr id="weekdays">
+                    <th id="Sunday" scope="col">
+                        <abbr title="Sunday">Sun</abbr>
+                    </th>
+                    <th id="Monday" scope="col">
+                        <abbr title="Monday">Mon</abbr>
+                    </th>
+                    <th id="Tuesday" scope="col">
+                        <abbr title="Tuesday">Tue</abbr>
+                    </th>
+                    <th id="Wednesday" scope="col">
+                        <abbr title="Wednesday">Wed</abbr>
+                    </th>
+                    <th id="Thursday" scope="col">
+                        <abbr title="Thursday">Thu</abbr>
+                    </th>
+                    <th id="Friday" scope="col">
+                        <abbr title="Friday">Fri</abbr>
+                    </th>
+                    <th id="Saturday" scope="col">
+                        <abbr title="Saturday">Sat</abbr>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <aura:iteration items="{!v.MonthMap}" var="year">
+                    
+                    <tr id="week1">
+                        <td class="{!if(year.Sunday==0,'slds-disabled-text','')}" headers="Sunday week1" role="gridcell" aria-disabled="true" aria-selected="false">
+                            <span class="slds-day" onclick="{!c.selecteddate}">{!year.Sunday}</span>
+                        </td>
+                        <td class="{!if(year.Monday==0,'slds-disabled-text','')}" headers="Monday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day" onclick="{!c.selecteddate}">{!year.Monday}</span>
+                        </td>
+                        <td class="{!if(year.Tuesday==0,'slds-disabled-text','')}" headers="Tuesday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day" onclick="{!c.selecteddate}">{!year.Tuesday}</span>
+                        </td>
+                        <td class="{!if(year.Wednesday==0,'slds-disabled-text','')}" headers="Wednesday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day" onclick="{!c.selecteddate}">{!year.Wednesday}</span>
+                        </td>
+                        <td class="{!if(year.Thursday==0,'slds-disabled-text','')}" headers="Thursday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day" onclick="{!c.selecteddate}">{!year.Thursday}</span>
+                        </td>
+                        <td class="{!if(year.Friday==0,'slds-disabled-text','')}" headers="Friday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day" onclick="{!c.selecteddate}">{!year.Friday}</span>
+                        </td>
+                        <td class="{!if(year.Saturday==0,'slds-disabled-text','')}" headers="Saturday week1" role="gridcell" aria-selected="false">
+                            <span class="slds-day" onclick="{!c.selecteddate}">{!year.Saturday}</span>
+                        </td>
+                    </tr>
+                </aura:iteration>
+                
+            </tbody>
+        </table>
+    </div>
+    
+</aura:component>
